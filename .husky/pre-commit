@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "🔍 Running ESLint across all files..."
+bun --cwd app run lint || exit 1
+
+echo "📘 Running TypeScript type check..."
+bun --cwd app run type-check || exit 1
+
+echo "✅ All code quality checks passed successfully!"
