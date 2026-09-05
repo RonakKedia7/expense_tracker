@@ -1,8 +1,20 @@
 import React from "react";
+
 import { View, Pressable, StyleSheet } from "react-native";
-import { House, ChartPie, Users, MoreHorizontal, ScanLine } from "lucide-react-native";
+
+import {
+    House,
+    ChartPie,
+    Users,
+    MoreHorizontal,
+    ScanLine,
+} from "lucide-react-native";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { router } from "expo-router";
+
+import { colors } from "../../theme";
 
 export default function CustomTabBar({ state, navigation }: any) {
     const insets = useSafeAreaInsets();
@@ -41,9 +53,9 @@ export default function CustomTabBar({ state, navigation }: any) {
                         ]}
                     >
                         <ScanLine
-                            size={40} /* Increased size to stand out */
-                            color="#60A5FA" /* Matches the other icons */
-                            strokeWidth={2.2}
+                            size={40}
+                            color={colors.icon.inactive}
+                            strokeWidth={1.7}
                         />
                     </Pressable>
                 </View>
@@ -66,9 +78,9 @@ export default function CustomTabBar({ state, navigation }: any) {
     );
 }
 
-/* ===================================================== */
-/* TAB BUTTON                                            */
-/* ===================================================== */
+/* =====================================================
+   TAB BUTTON
+   ===================================================== */
 
 function TabButton({
     focused,
@@ -89,46 +101,53 @@ function TabButton({
         >
             <Icon
                 size={focused ? 28 : 26}
-                color={focused ? "#FFFFFF" : "#60A5FA"}
-                strokeWidth={focused ? 2.8 : 2.2}
+                color={
+                    focused
+                        ? colors.accent.primary
+                        : colors.icon.inactive
+                }
+                strokeWidth={focused ? 2.3 : 1.7}
             />
         </Pressable>
     );
 }
 
-/* ===================================================== */
-/* STYLES                                                */
-/* ===================================================== */
+/* =====================================================
+   STYLES
+   ===================================================== */
 
 const styles = StyleSheet.create({
-    /* --------------------------------------------------- */
-    /* OUTER WRAPPER                                       */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       OUTER WRAPPER
+       --------------------------------------------------- */
+
     wrapper: {
         width: "100%",
-        backgroundColor: "#1E3A8A",
+        backgroundColor: colors.background.secondary,
         borderTopWidth: 1,
-        borderTopColor: "#172554",
+        borderTopColor: colors.border.default,
         zIndex: 1000,
         elevation: 1000,
     },
 
-    /* --------------------------------------------------- */
-    /* NAVIGATION BAR                                      */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       NAVIGATION BAR
+       --------------------------------------------------- */
+
     bar: {
         height: 72,
         width: "100%",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        backgroundColor: "#1E3A8A",
+        backgroundColor: colors.background.secondary,
         paddingHorizontal: 20,
     },
 
-    /* --------------------------------------------------- */
-    /* NORMAL TAB                                          */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       NORMAL TAB
+       --------------------------------------------------- */
+
     tabButton: {
         width: 56,
         height: 56,
@@ -137,17 +156,19 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
 
-    /* --------------------------------------------------- */
-    /* PRESSED STATE                                       */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       PRESSED STATE
+       --------------------------------------------------- */
+
     tabPressed: {
-        backgroundColor: "#1E40AF",
+        backgroundColor: colors.background.pressed,
         transform: [{ scale: 0.92 }],
     },
 
-    /* --------------------------------------------------- */
-    /* SCAN SLOT                                           */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       SCAN SLOT
+       --------------------------------------------------- */
+
     scanSlot: {
         width: 64,
         height: 64,
@@ -155,23 +176,25 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 
-    /* --------------------------------------------------- */
-    /* SCAN BUTTON                                         */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       SCAN BUTTON
+       --------------------------------------------------- */
+
     scanButton: {
         width: 64,
         height: 64,
         alignItems: "center",
         justifyContent: "center",
-        // Removed background color and shadows to match the flat icon style
     },
 
-    /* --------------------------------------------------- */
-    /* SCAN PRESSED                                        */
-    /* --------------------------------------------------- */
+    /* ---------------------------------------------------
+       SCAN PRESSED
+       --------------------------------------------------- */
+
     scanPressed: {
-        backgroundColor: "#1E40AF", // Adds the same press-highlight as the other tabs
+        backgroundColor: colors.background.pressed,
         borderRadius: 16,
         transform: [{ scale: 0.92 }],
     },
 });
+

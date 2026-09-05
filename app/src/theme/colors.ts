@@ -1,31 +1,59 @@
 export const colors = {
     background: {
-        primary: "#1E3A8A",     // Deep Navy Blue (Tab bar background)
-        secondary: "#172554",   // Darker Navy (For cards/containers)
-        pressed: "#1E40AF",     // Slightly lighter navy (Tab pressed state)
+        primary: "#F7F4EF",
+        secondary: "#FFFFFF",
+        tertiary: "#F0ECE5",
+        pressed: "#F2E2DC",
         transparent: "transparent",
     },
 
     text: {
-        primary: "#FFFFFF",     // Pure White (Main text)
-        secondary: "#60A5FA",   // Light Blue (Subtitles/Secondary text)
-        inverse: "#1E3A8A",     // Deep Navy (For text on top of white buttons)
+        primary: "#242321",
+        secondary: "#77736D",
+        muted: "#A39D95",
+        inverse: "#FFFFFF",
     },
 
     icon: {
-        active: "#FFFFFF",      // Pure White (Active tab icon)
-        inactive: "#60A5FA",    // Light Blue (Inactive tab icons & Scan button)
+        active: "#242321",
+        inactive: "#77736D",
+        muted: "#A39D95",
     },
 
     accent: {
-        primary: "#3B82F6",     // Vibrant Royal Blue (For active buttons/highlights anywhere in app)
+        primary: "#B86B52",
+        light: "#F2E2DC",
+        dark: "#9F5B45",
+    },
+
+    button: {
+        primary: "#B86B52",
+        primaryPressed: "#9F5B45",
+        secondary: "#F0ECE5",
+        secondaryPressed: "#E6E1D9",
+        text: "#FFFFFF",
+        secondaryText: "#242321",
     },
 
     border: {
-        default: "#172554",     // Darker Navy (Tab bar top border)
+        default: "#E6E1D9",
+        subtle: "#EEEAE4",
+        focused: "#B86B52",
+    },
+
+    status: {
+        success: "#3F7D5A",
+        successBackground: "#E5F0E9",
+
+        warning: "#B7791F",
+        warningBackground: "#F8ECD5",
+
+        danger: "#C44D4D",
+        dangerBackground: "#F9E2E2",
     },
 
     shadow: {
         default: "#000000",
     },
 } as const;
+
