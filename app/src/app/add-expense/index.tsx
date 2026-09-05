@@ -12,33 +12,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import {
     X,
-    Utensils,
-    ShoppingCart,
-    Bus,
-    ShoppingBag,
-    Zap,
-    Film,
-    HeartPulse,
-    Tag,
     Check,
     FileText,
-    TrendingUp,
 } from "lucide-react-native";
 import { addExpense } from "@/database/expenses";
 import { colors } from "@/theme";
-
-
-const CATEGORIES = [
-    { id: "Food & Dining", label: "Food", icon: Utensils },
-    { id: "Groceries", label: "Groceries", icon: ShoppingCart },
-    { id: "Transport", label: "Transport", icon: Bus },
-    { id: "Shopping", label: "Shopping", icon: ShoppingBag },
-    { id: "Bills & Utilities", label: "Bills", icon: Zap },
-    { id: "Entertainment", label: "Entertainment", icon: Film },
-    { id: "Health", label: "Health", icon: HeartPulse },
-    { id: "Investment", label: "Investment", icon: TrendingUp },
-    { id: "Other", label: "Other", icon: Tag },
-];
+import { CATEGORIES } from "@/utils/categoryItems";
 
 export default function AddExpenseModal() {
     const [amountInput, setAmountInput] = useState<string>("");
