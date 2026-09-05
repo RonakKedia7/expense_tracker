@@ -1,7 +1,5 @@
 import { View, Text, Pressable } from "react-native";
-import { Settings } from "lucide-react-native";
 import { colors } from "../../theme";
-import { router } from "expo-router";
 import { getUserSettings } from "../../database/user";
 
 export function HomeHeader() {
@@ -41,21 +39,6 @@ export function HomeHeader() {
                     {currentDate}
                 </Text>
             </View>
-
-            <Pressable
-                onPress={() => router.push("/more")}
-                className="w-10 h-10 rounded-full items-center justify-center"
-                style={{
-                    backgroundColor: colors.background.secondary,
-                    borderColor: colors.border.default,
-                    borderWidth: 1,
-                }}
-            >
-                <Settings
-                    size={20}
-                    color={colors.icon.inactive}
-                />
-            </Pressable>
         </View>
     );
 }

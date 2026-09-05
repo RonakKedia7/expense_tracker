@@ -112,7 +112,7 @@ export default function AddExpenseModal() {
                             Category
                         </Text>
                         <View className="flex-row flex-wrap justify-between" style={{ gap: 10 }}>
-                            {CATEGORIES.map((cat) => {
+                            {CATEGORIES.filter((c) => (c.id !== "Split")).map((cat) => {
                                 const IconComponent = cat.icon;
                                 const isSelected = selectedCategory === cat.id;
 

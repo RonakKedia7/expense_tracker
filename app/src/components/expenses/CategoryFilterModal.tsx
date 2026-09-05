@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, Modal, ScrollView } from "react-native";
-import { X, LucideIcon } from "lucide-react-native";
+import { X } from "lucide-react-native";
 import { colors } from "@/theme";
 import { CategoryItem } from "@/utils/categoryItems";
 
@@ -37,8 +36,14 @@ export function CategoryFilterModal({
     };
 
     return (
-        <Modal visible={visible} animationType="slide" transparent statusBarTranslucent onRequestClose={onClose}>
-            {/* Pressing backdrop closes modal */}
+        <Modal
+            visible={visible}
+            animationType="fade"
+            transparent
+            statusBarTranslucent
+            onRequestClose={onClose}
+        >
+            {/* Pressing backdrop closes modal with fade transition */}
             <Pressable className="flex-1 justify-end" style={{ backgroundColor: "rgba(0,0,0,0.5)" }} onPress={onClose}>
                 {/* Prevent clicks inside modal from closing it */}
                 <Pressable
