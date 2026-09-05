@@ -14,7 +14,7 @@ import { ExpensesHeader } from "@/components/expenses/ExpensesHeader";
 import { ExpensesSearchBar } from "@/components/expenses/ExpensesSearchBar";
 import { ExpensesFilterBar } from "@/components/expenses/ExpensesFilterBar";
 import { ExpensesSummaryCard } from "@/components/expenses/ExpensesSummaryCard";
-import { CategoryFilterModal, CategoryItem } from "@/components/expenses/CategoryFilterModal";
+import { CategoryFilterModal } from "@/components/expenses/CategoryFilterModal";
 import { DateRangeModal } from "@/components/expenses/DateRangeModal";
 import { CATEGORIES } from "@/utils/categoryItems";
 
