@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { ScrollView, View, Text, ActivityIndicator, RefreshControl } from "react-native";
+import { ScrollView, View, ActivityIndicator, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "expo-router";
 
 import { colors } from "@/theme";
 import { getUserSettings } from "@/database/user";
 import { getAnalyticsData, AnalyticsData } from "@/database/analyticsService";
+import { exportAnalyticsToExcel } from "@/utils/exportAnalytics";
 
+import { AnalyticsHeader } from "@/components/analytics/AnalyticsHeader";
 import { BudgetOverviewCard } from "@/components/analytics/BudgetOverviewCard";
 import { ComparisonCard } from "@/components/analytics/ComparisonCard";
 import { CategoryBreakdownCard } from "@/components/analytics/CategoryBreakdownCard";
 import { SplitAnalyticsCard } from "@/components/analytics/SplitAnalyticsCard";
 import { TopExpensesCard } from "@/components/analytics/TopExpensesCard";
-import { AnalyticsHeader } from "@/components/analytics/AnalyticsHeader";
 
 export default function AnalyticsScreen() {
     const insets = useSafeAreaInsets();
@@ -48,6 +49,12 @@ export default function AnalyticsScreen() {
         loadData();
     };
 
+    const handleExport = () => {
+        if (analytics) {
+            exportAnalyticsToExcel(analytics, budget);
+        }
+    };
+
     if (loading || !analytics) {
         return (
             <View className="flex-1 items-center justify-center" style={{ backgroundColor: colors.background.primary }}>
@@ -58,8 +65,6 @@ export default function AnalyticsScreen() {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.background.primary, paddingTop: insets.top }}>
-
-
             <ScrollView
                 className="flex-1 px-5 pt-4"
                 contentContainerStyle={{ paddingBottom: 100 }}
@@ -68,7 +73,8 @@ export default function AnalyticsScreen() {
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent.primary} />
                 }
             >
-                <AnalyticsHeader />
+                <AnalyticsHeader onExport={handleExport} />
+
                 <BudgetOverviewCard
                     spent={analytics.currentMonthSpend}
                     budget={budget}
