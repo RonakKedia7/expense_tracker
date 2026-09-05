@@ -6,7 +6,7 @@ A local-first, privacy-focused mobile application built for tracking personal ex
 
 | Platform | Type | Download Link |
 | --- | --- | --- |
-| Android | Direct APK | [Download APK](https://www.google.com/search?q=https://github.com/your-username/expense-tracker/releases/latest/download/app-release.apk) |
+| Android | Direct APK | [Download APK](https://expo.dev/accounts/ronakkedia7/projects/app/builds/cb086275-a672-4a9c-a708-76a26936dad9) |
 | iOS / Android | Source Build | Clone repository and run via Expo |
 
 ## Tech Stack
