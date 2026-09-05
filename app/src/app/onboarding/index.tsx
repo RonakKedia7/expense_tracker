@@ -11,8 +11,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { ArrowRight, Check, User, Wallet } from "lucide-react-native";
-import { colors } from "../theme";
-import { saveUserSettings } from "../database/user";
+import { colors } from "@/theme";
+import { saveUserSettings } from "@/database/user";
 
 export default function OnboardingScreen() {
     const [step, setStep] = useState<number>(1);
