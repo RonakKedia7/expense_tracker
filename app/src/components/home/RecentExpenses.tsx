@@ -6,9 +6,10 @@ import { router } from 'expo-router';
 
 interface RecentExpensesProps {
     expenses: ExpenseRecord[];
+    onExpenseDeleted?: () => void;
 }
 
-export function RecentExpenses({ expenses }: RecentExpensesProps) {
+export function RecentExpenses({ expenses, onExpenseDeleted }: RecentExpensesProps) {
     return (
         <View className="mt-4 mb-6">
             <View className="flex-row items-center justify-between mb-3">
@@ -40,7 +41,11 @@ export function RecentExpenses({ expenses }: RecentExpensesProps) {
                 </View>
             ) : (
                 expenses.map((expense) => (
-                    <ExpenseRow key={expense.id} expense={expense} />
+                    <ExpenseRow
+                        key={expense.id}
+                        expense={expense}
+                        onDelete={onExpenseDeleted}
+                    />
                 ))
             )}
         </View>

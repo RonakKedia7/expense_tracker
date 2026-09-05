@@ -137,7 +137,7 @@ export default function HomeScreen() {
 
         <QuickActions />
 
-        <RecentExpenses expenses={recentExpenses} />
+        <RecentExpenses expenses={recentExpenses} onExpenseDeleted={loadHomeData} />
       </ScrollView>
     </SafeAreaView>
   );

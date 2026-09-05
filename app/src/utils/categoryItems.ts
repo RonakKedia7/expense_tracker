@@ -8,6 +8,7 @@ import {
     HeartPulse,
     TrendingUp,
     Tag,
+    Users,
     LucideIcon,
 } from "lucide-react-native";
 
@@ -18,6 +19,7 @@ export interface CategoryItem {
 }
 
 export const CATEGORIES: CategoryItem[] = [
+    { id: "Split", label: "Split", icon: Users },
     { id: "Food & Dining", label: "Food", icon: Utensils },
     { id: "Groceries", label: "Groceries", icon: ShoppingCart },
     { id: "Transport", label: "Transport", icon: Bus },
@@ -28,3 +30,4 @@ export const CATEGORIES: CategoryItem[] = [
     { id: "Investment", label: "Investment", icon: TrendingUp },
     { id: "Other", label: "Other", icon: Tag },
 ];
+

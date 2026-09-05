@@ -31,14 +31,18 @@ export default function ExpensesScreen() {
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [showDateModal, setShowDateModal] = useState(false);
 
+    const loadExpenses = () => {
+        try {
+            const data = getAllExpenses(500, 0);
+            setExpenses(data);
+        } catch (error) {
+            console.error("Failed to load expenses:", error);
+        }
+    };
+
     useFocusEffect(
         React.useCallback(() => {
-            try {
-                const data = getAllExpenses(500, 0);
-                setExpenses(data);
-            } catch (error) {
-                console.error("Failed to load expenses:", error);
-            }
+            loadExpenses();
         }, [])
     );
 
@@ -126,7 +130,14 @@ export default function ExpensesScreen() {
                         </Text>
                     </View>
                 }
-                renderItem={({ item }) => <ExpenseRow expense={item} />}
+                renderItem={({ item }) => (
+                    <ExpenseRow
+                        expense={item}
+                        onDelete={(deletedId) => {
+                            setExpenses((prev) => prev.filter((exp) => exp.id !== deletedId));
+                        }}
+                    />
+                )}
             />
 
             <CategoryFilterModal

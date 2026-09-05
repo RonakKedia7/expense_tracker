@@ -1,7 +1,10 @@
-import { Utensils, ShoppingCart, Bus, ShoppingBag, Receipt, Film, Tag, Zap, Coffee, HeartPulse } from 'lucide-react-native';
+import { Utensils, ShoppingCart, Bus, ShoppingBag, Receipt, Film, Tag, Zap, Coffee, HeartPulse, Users } from 'lucide-react-native';
 
 export function getCategoryIcon(category: string, color: string, size = 20) {
     const cat = category.toLowerCase();
+    if (cat.includes('split') || cat.includes('split bill')) {
+        return <Users size={size} color={color} />;
+    }
     if (cat.includes('food') || cat.includes('restaurant') || cat.includes('dining')) {
         return <Utensils size={size} color={color} />;
     }

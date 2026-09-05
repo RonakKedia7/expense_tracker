@@ -38,6 +38,7 @@ export interface ParticipantInput {
 export interface CreateSplitBillInput {
     title: string;
     totalAmountInRupees: number;
+    category?: string; // Optional category for recent expenses
     paidBy?: string;
     date?: number;
     notes?: string | null;
@@ -58,6 +59,7 @@ export function createSplitBill(input: CreateSplitBillInput): number {
     const totalAmountPaise = Math.round(input.totalAmountInRupees * 100);
     const paidBy = input.paidBy?.trim() || "You";
     const date = input.date || now;
+    const splitTitle = input.title.trim() !== "Split Bill" ? `${input.title?.trim()} (split)` : "Split Bill";
 
     // Determine initial status based on participants' paid state
     const allPaid = input.participants.every((p) => p.isPaid);
@@ -71,11 +73,12 @@ export function createSplitBill(input: CreateSplitBillInput): number {
     let createdBillId = 0;
 
     db.withTransactionSync(() => {
+        // 1. Insert the parent split bill
         const billResult = db.runSync(
             `INSERT INTO split_bills (title, total_amount, paid_by, date, notes, status, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
             [
-                input.title.trim(),
+                splitTitle,
                 totalAmountPaise,
                 paidBy,
                 date,
@@ -88,16 +91,38 @@ export function createSplitBill(input: CreateSplitBillInput): number {
 
         createdBillId = billResult.lastInsertRowId;
 
+        // 2. Insert participants and log "You" share as an expense
         for (const p of input.participants) {
             const sharePaise = Math.round(p.shareInRupees * 100);
             const isPaidVal = p.isPaid ? 1 : 0;
             const paidAtVal = p.isPaid ? now : null;
+            const participantName = p.name.trim();
 
             db.runSync(
                 `INSERT INTO split_participants (split_bill_id, name, share_amount, is_paid, paid_at, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, ?, ?);`,
-                [createdBillId, p.name.trim(), sharePaise, isPaidVal, paidAtVal, now, now]
+                [createdBillId, participantName, sharePaise, isPaidVal, paidAtVal, now, now]
             );
+
+            // If this participant is "You", log to expenses
+            if (participantName.toLowerCase() === "you") {
+                const expenseCategory = splitTitle; // Category name = split title
+                const expenseNotes = input.notes?.trim() || null; // Notes = split notes
+
+                db.runSync(
+                    `INSERT INTO expenses (amount, category, date, notes, receipt_uri, created_at, updated_at) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                    [
+                        sharePaise,
+                        expenseCategory,
+                        date,
+                        expenseNotes,
+                        null,
+                        now,
+                        now,
+                    ]
+                );
+            }
         }
     });
 
@@ -218,8 +243,29 @@ export function updateParticipantPaymentStatus(participantId: number, isPaid: bo
 /**
  * Deletes a split bill (associated participants are auto-deleted via CASCADE).
  */
+/**
+ * Deletes a split bill, its associated participants, and its corresponding individual expense.
+ */
 export function deleteSplitBill(id: number): void {
-    db.runSync(`DELETE FROM split_bills WHERE id = ?;`, [id]);
+    db.withTransactionSync(() => {
+        // 1. Get the split bill title before deleting it
+        const bill = db.getFirstSync<{ title: string }>(
+            `SELECT title FROM split_bills WHERE id = ?;`,
+            [id]
+        );
+
+        if (!bill) return;
+
+        // 2. Delete the split bill (participants auto-delete via CASCADE)
+        db.runSync(`DELETE FROM split_bills WHERE id = ?;`, [id]);
+
+        // 3. Delete the corresponding personal share from the expenses table
+        // Matching by category name which stores the formatted split title
+        db.runSync(
+            `DELETE FROM expenses WHERE category = ?;`,
+            [bill.title]
+        );
+    });
 }
 
 /**
